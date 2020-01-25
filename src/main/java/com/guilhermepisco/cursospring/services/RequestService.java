@@ -15,7 +15,7 @@ public class RequestService {
 	@Autowired
 	private RequestRepository repo;
 	
-	public Request get(Integer id) {
+	public Request find(Integer id) {
 		
 		Optional<Request> obj = repo.findById(id);
 		
