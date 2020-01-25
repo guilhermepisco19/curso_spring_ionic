@@ -17,6 +17,7 @@ import com.guilhermepisco.cursospring.domain.PaymentWithBoleto;
 import com.guilhermepisco.cursospring.domain.PaymentWithCard;
 import com.guilhermepisco.cursospring.domain.Product;
 import com.guilhermepisco.cursospring.domain.Request;
+import com.guilhermepisco.cursospring.domain.RequestItem;
 import com.guilhermepisco.cursospring.domain.State;
 import com.guilhermepisco.cursospring.domain.enums.ClientType;
 import com.guilhermepisco.cursospring.domain.enums.PaymentStatus;
@@ -26,6 +27,7 @@ import com.guilhermepisco.cursospring.repositories.CityRepository;
 import com.guilhermepisco.cursospring.repositories.ClientRepository;
 import com.guilhermepisco.cursospring.repositories.PaymentRepository;
 import com.guilhermepisco.cursospring.repositories.ProductRepository;
+import com.guilhermepisco.cursospring.repositories.RequestItemRepository;
 import com.guilhermepisco.cursospring.repositories.RequestRepository;
 import com.guilhermepisco.cursospring.repositories.StateRepository;
 
@@ -48,6 +50,8 @@ public class CursospringApplication implements CommandLineRunner{
 	private RequestRepository requestRepository;
 	@Autowired
 	private PaymentRepository paymentRepository;
+	@Autowired
+	private RequestItemRepository requestItemRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursospringApplication.class, args);
@@ -117,6 +121,18 @@ public class CursospringApplication implements CommandLineRunner{
 		requestRepository.saveAll(Arrays.asList(req1,req2));
 		paymentRepository.saveAll(Arrays.asList(pay1,pay2));
 		
+		RequestItem reqItem1 = new RequestItem(req1, p1, 0.00, 1, 2000.00);
+		RequestItem reqItem2 = new RequestItem(req1, p3, 0.00, 2, 80.00);
+		RequestItem reqItem3 = new RequestItem(req2, p2, 100.00, 1, 800.00);
+		
+		req1.getItems().addAll(Arrays.asList(reqItem1,reqItem2));
+		req2.getItems().addAll(Arrays.asList(reqItem3));
+		
+		p1.getItems().addAll(Arrays.asList(reqItem1));
+		p2.getItems().addAll(Arrays.asList(reqItem3));
+		p3.getItems().addAll(Arrays.asList(reqItem2));
+		
+		requestItemRepository.saveAll(Arrays.asList(reqItem1,reqItem2,reqItem3));
 	}
 
 }
