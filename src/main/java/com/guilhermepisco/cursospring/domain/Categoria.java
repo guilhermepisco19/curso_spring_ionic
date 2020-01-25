@@ -25,10 +25,10 @@ public class Categoria implements Serializable{
 	public Categoria() {
 	}
 
-	public Categoria(Integer id, String nome) {
+	public Categoria(Integer id, String name) {
 		super();
 		this.id = id;
-		this.name = nome;
+		this.name = name;
 	}
 
 	public Integer getId() {
@@ -39,12 +39,12 @@ public class Categoria implements Serializable{
 		this.id = id;
 	}
 
-	public String getNome() {
+	public String getName() {
 		return name;
 	}
 
-	public void setNome(String nome) {
-		this.name = nome;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public List<Product> getProducts() {
