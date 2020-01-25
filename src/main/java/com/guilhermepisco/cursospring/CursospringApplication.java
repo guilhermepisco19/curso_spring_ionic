@@ -1,5 +1,6 @@
 package com.guilhermepisco.cursospring;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +12,21 @@ import com.guilhermepisco.cursospring.domain.Address;
 import com.guilhermepisco.cursospring.domain.Categoria;
 import com.guilhermepisco.cursospring.domain.City;
 import com.guilhermepisco.cursospring.domain.Client;
+import com.guilhermepisco.cursospring.domain.Payment;
+import com.guilhermepisco.cursospring.domain.PaymentWithBoleto;
+import com.guilhermepisco.cursospring.domain.PaymentWithCard;
 import com.guilhermepisco.cursospring.domain.Product;
+import com.guilhermepisco.cursospring.domain.Request;
 import com.guilhermepisco.cursospring.domain.State;
 import com.guilhermepisco.cursospring.domain.enums.ClientType;
+import com.guilhermepisco.cursospring.domain.enums.PaymentStatus;
 import com.guilhermepisco.cursospring.repositories.AddressRepository;
 import com.guilhermepisco.cursospring.repositories.CategoriaRepository;
 import com.guilhermepisco.cursospring.repositories.CityRepository;
 import com.guilhermepisco.cursospring.repositories.ClientRepository;
+import com.guilhermepisco.cursospring.repositories.PaymentRepository;
 import com.guilhermepisco.cursospring.repositories.ProductRepository;
+import com.guilhermepisco.cursospring.repositories.RequestRepository;
 import com.guilhermepisco.cursospring.repositories.StateRepository;
 
 @SpringBootApplication
@@ -36,6 +44,10 @@ public class CursospringApplication implements CommandLineRunner{
 	private ClientRepository clientRepository;
 	@Autowired
 	private AddressRepository addressRepository;
+	@Autowired
+	private RequestRepository requestRepository;
+	@Autowired
+	private PaymentRepository paymentRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursospringApplication.class, args);
@@ -88,6 +100,23 @@ public class CursospringApplication implements CommandLineRunner{
 		
 		clientRepository.saveAll(Arrays.asList(cli1));
 		addressRepository.saveAll(Arrays.asList(ad1,ad2));
+		
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		Request req1 = new Request(null,sdf.parse("30/09/2017 10:32"), cli1, ad1);
+		Request req2 = new Request(null,sdf.parse("10/10/2017 19:35"), cli1, ad2);
+		
+		Payment pay1 = new PaymentWithCard(null, PaymentStatus.PAID, req1, 6);
+		req1.setPayment(pay1);
+		
+		Payment pay2 = new PaymentWithBoleto(null, PaymentStatus.PENDING, req2,sdf.parse("20/10/2017 00:00"),null);
+		req2.setPayment(pay2);
+		
+		cli1.getRequests().addAll(Arrays.asList(req1,req2));
+		
+		requestRepository.saveAll(Arrays.asList(req1,req2));
+		paymentRepository.saveAll(Arrays.asList(pay1,pay2));
+		
 	}
 
 }
