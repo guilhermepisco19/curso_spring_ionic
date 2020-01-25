@@ -15,6 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Request implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -22,15 +26,20 @@ public class Request implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date instant;
 	
+	@JsonManagedReference
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="request")
 	private Payment payment;
 	
-	@ManyToOne()
+	@JsonManagedReference
+	@ManyToOne
 	@JoinColumn(name="client_id")
 	private Client client;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="delivery_address_id")
 	private Address deliveryAddress;
