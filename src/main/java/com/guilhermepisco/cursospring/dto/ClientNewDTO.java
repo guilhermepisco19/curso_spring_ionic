@@ -2,36 +2,51 @@ package com.guilhermepisco.cursospring.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.guilhermepisco.cursospring.services.validations.ClientInsert;
+
+@ClientInsert
 public class ClientNewDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	private Integer id;
+	@NotEmpty(message="Mandatory filling")
+	@Length(min=5, max=120, message="Size must be between 5 and 120 characters")	
 	private String name;
+	
+	@NotEmpty(message="Mandatory filling")
+	@Email(message="Invalid email")
 	private String email;
+	
+	@NotEmpty(message="Mandatory filling")
 	private String cpfOrCnpj;
+	
 	private Integer clientType;
 	
+	@NotEmpty(message="Mandatory filling")
 	private String publicPlaces;
+	
+	@NotEmpty(message="Mandatory filling")
 	private String number;
+	
 	private String complement;
 	private String neighborhood;
+	
+	@NotEmpty(message="Mandatory filling")
 	private String cep;
 	
+	@NotEmpty(message="Mandatory filling")
 	private String phone;
+	
 	private String phone2;
 	private String phone3;
 	
 	private Integer cityId;
 	
 	public ClientNewDTO() {
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getName() {
