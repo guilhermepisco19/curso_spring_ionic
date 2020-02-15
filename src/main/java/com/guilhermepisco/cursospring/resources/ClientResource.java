@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.guilhermepisco.cursospring.domain.Client;
 import com.guilhermepisco.cursospring.dto.ClientDTO;
+import com.guilhermepisco.cursospring.dto.ClientNewDTO;
 import com.guilhermepisco.cursospring.services.ClientService;
 
 @RestController
@@ -54,6 +55,17 @@ public class ClientResource {
 		Page<Client> list = service.findPage(page, linesPerPage, orderBy, direction);
 		Page<ClientDTO> listDTO = list.map(obj -> new ClientDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO objDTO){
+		Client obj = service.fromDTO(objDTO);
+		obj = service.insert(obj);
+		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value= "/{id}", method=RequestMethod.PUT)
