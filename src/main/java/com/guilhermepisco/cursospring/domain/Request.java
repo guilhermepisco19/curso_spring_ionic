@@ -55,7 +55,12 @@ public class Request implements Serializable{
 		this.client = client;
 		this.deliveryAddress = deliveryAddress;
 	}
-
+	
+	public double getTotalValue() {
+		return items.stream().mapToDouble(RequestItem::getSubTotal).sum();
+	}
+	
+	
 	public Integer getId() {
 		return id;
 	}

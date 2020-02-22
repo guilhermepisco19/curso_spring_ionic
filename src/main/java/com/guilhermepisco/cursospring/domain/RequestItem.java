@@ -32,6 +32,10 @@ public class RequestItem  implements Serializable{
 		this.price = price;
 	}
 	
+	/* Put "get" on the method's name, so JSON recognize it and serialize the value */
+	public double getSubTotal() {
+		return (price - discount) * quantity;
+	}
 	
 	public Product getProduct() {
 		return id.getProduct();
