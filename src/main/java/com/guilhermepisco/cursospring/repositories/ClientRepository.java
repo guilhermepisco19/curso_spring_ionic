@@ -9,6 +9,6 @@ import com.guilhermepisco.cursospring.domain.Client;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Integer>{
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly=true) /*As these is a SELECT query there is no need to create a transaction, so readOnly=true*/
 	Client findByEmail(String email);
 }
