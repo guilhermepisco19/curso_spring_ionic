@@ -64,11 +64,13 @@ public class RequestService {
 		
 		for(RequestItem item : obj.getItems()) {
 			item.setDiscount(0.0);
-			item.setPrice(productService.find(item.getProduct().getId()).getPrice());
+			item.setProduct(productService.find(item.getProduct().getId()));
+			item.setPrice(item.getProduct().getPrice());
 			item.setRequest(obj);
 		}
 		
 		requestItemRepository.saveAll(obj.getItems());
+		System.out.println(obj);
 		return obj;
 	}
 }
