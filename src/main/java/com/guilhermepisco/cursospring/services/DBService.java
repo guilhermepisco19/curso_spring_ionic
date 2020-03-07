@@ -52,7 +52,7 @@ public class DBService {
 	@Autowired
 	private RequestItemRepository requestItemRepository;
 	
-	public void instatiateTestDatabase() throws ParseException {
+	public void instantiateTestDatabase() throws ParseException {
 		Categoria cat1 = new Categoria(null, "Information Techonology");
 		Categoria cat2 = new Categoria(null, "Office");
 		Categoria cat3 = new Categoria(null, "Bed table and bath");
