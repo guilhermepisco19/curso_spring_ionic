@@ -45,16 +45,20 @@ public class Client implements Serializable{
 	@OneToMany(mappedBy="client")
 	private List<Request> requests = new ArrayList<>();
 	
+	@JsonIgnore
+	private String password;
+	
 	public Client() {
 	}
 	
-	public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType) {
+	public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType clientType, String password) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.cpfOrCnpj = cpfOrCnpj;
 		this.clientType = clientType==null ? null : clientType.getCod();
+		this.password = password;
 	}
 
 	
@@ -121,6 +125,14 @@ public class Client implements Serializable{
 
 	public void setRequests(List<Request> requests) {
 		this.requests = requests;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override

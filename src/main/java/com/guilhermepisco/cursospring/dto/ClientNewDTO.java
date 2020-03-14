@@ -27,6 +27,9 @@ public class ClientNewDTO implements Serializable{
 	private Integer clientType;
 	
 	@NotEmpty(message="Mandatory filling")
+	private String password;
+	
+	@NotEmpty(message="Mandatory filling")
 	private String publicPlaces;
 	
 	@NotEmpty(message="Mandatory filling")
@@ -79,6 +82,14 @@ public class ClientNewDTO implements Serializable{
 
 	public void setClientType(Integer clientType) {
 		this.clientType = clientType;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getPublicPlaces() {
