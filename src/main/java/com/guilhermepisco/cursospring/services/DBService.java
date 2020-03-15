@@ -21,6 +21,7 @@ import com.guilhermepisco.cursospring.domain.RequestItem;
 import com.guilhermepisco.cursospring.domain.State;
 import com.guilhermepisco.cursospring.domain.enums.ClientType;
 import com.guilhermepisco.cursospring.domain.enums.PaymentStatus;
+import com.guilhermepisco.cursospring.domain.enums.Profile;
 import com.guilhermepisco.cursospring.repositories.AddressRepository;
 import com.guilhermepisco.cursospring.repositories.CategoriaRepository;
 import com.guilhermepisco.cursospring.repositories.CityRepository;
@@ -120,13 +121,20 @@ public class DBService {
 		Client cli1 = new Client(null, "Maria SIlva", "guilhermepisco19@gmail.com", "36378912377", ClientType.PHISICALPERSON, pe.encode("123"));
 		cli1.getPhone().addAll(Arrays.asList("27363323","93838393"));
 		
+		Client cli2 = new Client(null, "Ana Costa", "g.pisco@campus.fct.unl.pt", "19240156763", ClientType.PHISICALPERSON, pe.encode("123"));
+		cli2.getPhone().addAll(Arrays.asList("9346625","346685596"));
+		cli2.addProfile(Profile.ADMIN);
+		
+		
 		Address ad1 = new Address(null, "Rua FLores", "300", "Apto 203", "Jardim", "38220834", cli1, c1);
 		Address ad2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
+		Address ad3 = new Address(null, "Avenida Floriano", "2106", null, "Centro", "281777012", cli2, c2);
 		
 		cli1.getAddresses().addAll(Arrays.asList(ad1,ad2));
+		cli2.getAddresses().addAll(Arrays.asList(ad3));
 		
-		clientRepository.saveAll(Arrays.asList(cli1));
-		addressRepository.saveAll(Arrays.asList(ad1,ad2));
+		clientRepository.saveAll(Arrays.asList(cli1, cli2));
+		addressRepository.saveAll(Arrays.asList(ad1, ad2, ad3));
 		
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
