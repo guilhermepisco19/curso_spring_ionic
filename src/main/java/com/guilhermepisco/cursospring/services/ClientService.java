@@ -16,10 +16,13 @@ import com.guilhermepisco.cursospring.domain.Address;
 import com.guilhermepisco.cursospring.domain.City;
 import com.guilhermepisco.cursospring.domain.Client;
 import com.guilhermepisco.cursospring.domain.enums.ClientType;
+import com.guilhermepisco.cursospring.domain.enums.Profile;
 import com.guilhermepisco.cursospring.dto.ClientDTO;
 import com.guilhermepisco.cursospring.dto.ClientNewDTO;
 import com.guilhermepisco.cursospring.repositories.AddressRepository;
 import com.guilhermepisco.cursospring.repositories.ClientRepository;
+import com.guilhermepisco.cursospring.security.UserSS;
+import com.guilhermepisco.cursospring.services.exceptions.AuthorizationException;
 import com.guilhermepisco.cursospring.services.exceptions.DataIntegrityException;
 import com.guilhermepisco.cursospring.services.exceptions.ObjectNotFoundException;
 
@@ -36,6 +39,12 @@ public class ClientService {
 	private BCryptPasswordEncoder pe;
 	
 	public Client find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		
+		if(user==null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Access denied!");
+		}
 		
 		Optional<Client> obj = repo.findById(id);
 		
