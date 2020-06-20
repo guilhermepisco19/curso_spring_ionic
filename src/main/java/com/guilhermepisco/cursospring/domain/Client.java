@@ -55,6 +55,8 @@ public class Client implements Serializable{
 	@JsonIgnore
 	private String password;
 	
+	private String imgUrl;
+	
 	public Client() {
 		addProfile(Profile.CLIENT);
 	}
@@ -150,6 +152,14 @@ public class Client implements Serializable{
 	
 	public void addProfile(Profile profile) {
 		profiles.add(profile.getCod());
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	@Override
