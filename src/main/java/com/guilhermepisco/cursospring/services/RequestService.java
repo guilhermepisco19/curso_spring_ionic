@@ -4,16 +4,23 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.guilhermepisco.cursospring.domain.Client;
 import com.guilhermepisco.cursospring.domain.PaymentWithBoleto;
 import com.guilhermepisco.cursospring.domain.Request;
 import com.guilhermepisco.cursospring.domain.RequestItem;
 import com.guilhermepisco.cursospring.domain.enums.PaymentStatus;
+import com.guilhermepisco.cursospring.repositories.ClientRepository;
 import com.guilhermepisco.cursospring.repositories.PaymentRepository;
 import com.guilhermepisco.cursospring.repositories.RequestItemRepository;
 import com.guilhermepisco.cursospring.repositories.RequestRepository;
+import com.guilhermepisco.cursospring.security.UserSS;
+import com.guilhermepisco.cursospring.services.exceptions.AuthorizationException;
 import com.guilhermepisco.cursospring.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -77,5 +84,19 @@ public class RequestService {
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 
 		return obj;
+	}
+	
+	public Page<Request> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		UserSS user = UserService.authenticated();
+		
+		if(user == null) {
+			throw new AuthorizationException("Access denied");
+		}
+		
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		
+		Client cli = clientService.find(user.getId());
+		
+		return repo.findByClient(cli, pageRequest);
 	}
 }
