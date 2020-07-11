@@ -27,7 +27,7 @@ public class CategoriaService {
 		Optional<Categoria> obj = repo.findById(id);
 		
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+				"Object not found! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 	
 	public List<Categoria> findAll() {
@@ -53,7 +53,7 @@ public class CategoriaService {
 			repo.deleteById(id);
 		}
 		catch(DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Its not possivel to delete a category who has products");
+			throw new DataIntegrityException("Its not possivel to delete a category that has products");
 		}
 	}
 	
