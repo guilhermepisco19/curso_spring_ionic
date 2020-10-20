@@ -30,7 +30,7 @@ public class ClientNewDTO implements Serializable{
 	private String password;
 	
 	@NotEmpty(message="Mandatory filling")
-	private String publicPlaces;
+	private String address;
 	
 	@NotEmpty(message="Mandatory filling")
 	private String number;
@@ -92,12 +92,12 @@ public class ClientNewDTO implements Serializable{
 		this.password = password;
 	}
 
-	public String getPublicPlaces() {
-		return publicPlaces;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setPublicPlaces(String publicPlaces) {
-		this.publicPlaces = publicPlaces;
+	public void setAddress(String publicPlaces) {
+		this.address = publicPlaces;
 	}
 
 	public String getNumber() {
